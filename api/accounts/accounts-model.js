@@ -26,13 +26,6 @@ const updateById = async (id, account) => {
   return result;
 };
 
-// async function update(shipperId, changes) {
-//   await db("shippers").update(changes).where("shipperid", shipperId);
-//   const result = await getById(shipperId);
-//   return result;
-//   //We are not doing validating in here because the middle where is going to handle the errors
-// }
-
 const deleteById = async (id) => {
   // DO YOUR MAGIC
   const deletedItem = await getById(id);
