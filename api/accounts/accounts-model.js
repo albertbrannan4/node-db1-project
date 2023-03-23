@@ -12,8 +12,11 @@ const getById = async (id) => {
   return result;
 };
 
-const create = (account) => {
+const create = async (account) => {
   // DO YOUR MAGIC
+  let createdAccount = await db("accounts").insert(account);
+  let result = await getById(createdAccount);
+  return result;
 };
 
 const updateById = (id, account) => {
@@ -26,12 +29,6 @@ const deleteById = async (id) => {
   await db("accounts").del().where("id", id);
   return deletedItem;
 };
-
-// async function remove(shipperId) {
-//   const toBeDeleted = await getById(shipperId);
-//   await db("shippers").del().where("shipperid", shipperId);
-//   return toBeDeleted;
-// }
 
 module.exports = {
   getAll,
