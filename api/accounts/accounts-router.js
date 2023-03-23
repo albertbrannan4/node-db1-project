@@ -20,7 +20,7 @@ router.post("/", checkAccountPayload, async (req, res, next) => {
   // DO YOUR MAGIC
   try {
     let postedAccount = await Account.create(req.body);
-    res.json(postedAccount);
+    res.status(201).json(postedAccount);
   } catch (err) {
     next(err);
   }
@@ -32,6 +32,12 @@ router.put(
   checkAccountPayload,
   async (req, res, next) => {
     // DO YOUR MAGIC
+    try {
+      const updatedAccount = await Account.updateById(req.params.id, req.body);
+      res.status(200).json(updatedAccount);
+    } catch (err) {
+      next(err);
+    }
   }
 );
 

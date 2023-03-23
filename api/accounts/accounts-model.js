@@ -19,9 +19,19 @@ const create = async (account) => {
   return result;
 };
 
-const updateById = (id, account) => {
+const updateById = async (id, account) => {
   // DO YOUR MAGIC
+  await db("accounts").update(account).where("id", id);
+  let result = await getById(id);
+  return result;
 };
+
+// async function update(shipperId, changes) {
+//   await db("shippers").update(changes).where("shipperid", shipperId);
+//   const result = await getById(shipperId);
+//   return result;
+//   //We are not doing validating in here because the middle where is going to handle the errors
+// }
 
 const deleteById = async (id) => {
   // DO YOUR MAGIC
