@@ -3,6 +3,7 @@ const Account = require("./accounts-model");
 const {
   checkAccountId,
   checkAccountPayload,
+  checkAccountNameUnique,
 } = require("./accounts-middleware");
 router.get("/", async (req, res, next) => {
   // DO YOUR MAGIC
@@ -16,18 +17,23 @@ router.get("/:id", checkAccountId, async (req, res, next) => {
   res.status(200).json(specificAccount);
 });
 
-router.post("/", checkAccountPayload, async (req, res, next) => {
-  // DO YOUR MAGIC
-  try {
-    let postedAccount = await Account.create({
-      name: req.body.name.trim(),
-      budget: req.body.budget,
-    });
-    res.status(201).json(postedAccount);
-  } catch (err) {
-    next(err);
+router.post(
+  "/",
+  checkAccountPayload,
+  checkAccountNameUnique,
+  async (req, res, next) => {
+    // DO YOUR MAGIC
+    try {
+      let postedAccount = await Account.create({
+        name: req.body.name.trim(),
+        budget: req.body.budget,
+      });
+      res.status(201).json(postedAccount);
+    } catch (err) {
+      next(err);
+    }
   }
-});
+);
 
 router.put(
   "/:id",
