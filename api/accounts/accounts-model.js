@@ -20,9 +20,18 @@ const updateById = (id, account) => {
   // DO YOUR MAGIC
 };
 
-const deleteById = (id) => {
+const deleteById = async (id) => {
   // DO YOUR MAGIC
+  const deletedItem = await getById(id);
+  await db("accounts").del().where("id", id);
+  return deletedItem;
 };
+
+// async function remove(shipperId) {
+//   const toBeDeleted = await getById(shipperId);
+//   await db("shippers").del().where("shipperid", shipperId);
+//   return toBeDeleted;
+// }
 
 module.exports = {
   getAll,
