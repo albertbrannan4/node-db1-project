@@ -1,6 +1,9 @@
 const router = require("express").Router();
 const Account = require("./accounts-model");
-const { checkAccountId } = require("./accounts-middleware");
+const {
+  checkAccountId,
+  checkAccountPayload,
+} = require("./accounts-middleware");
 router.get("/", async (req, res, next) => {
   // DO YOUR MAGIC
   const AllAccounts = await Account.getAll();
@@ -13,13 +16,19 @@ router.get("/:id", checkAccountId, async (req, res, next) => {
   res.status(200).json(specificAccount);
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", checkAccountPayload, (req, res, next) => {
   // DO YOUR MAGIC
+  res.json(req.body);
 });
 
-router.put("/:id", checkAccountId, (req, res, next) => {
-  // DO YOUR MAGIC
-});
+router.put(
+  "/:id",
+  checkAccountId,
+  checkAccountPayload,
+  async (req, res, next) => {
+    // DO YOUR MAGIC
+  }
+);
 
 router.delete("/:id", checkAccountId, (req, res, next) => {
   // DO YOUR MAGIC
